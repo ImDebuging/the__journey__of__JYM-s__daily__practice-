@@ -1,0 +1,93 @@
+#include<iostream>
+using namespace std;
+
+struct node
+{
+int num;
+struct node *next;
+
+	node(){}
+	node(int a):num(a){}	
+};
+
+
+class seqlist{
+private:
+	node *head;
+public:
+	seqlist(int arr[],int n)
+	{
+		head=new node();
+		head->next = nullptr;
+		for (int i = n; i >= 0; i--)
+		{
+			node *temp = new node(arr[i]);
+			temp->next = head->next;
+			head->next = temp;
+		}
+	}
+
+  bool deletenode(int s,int t)          //删除s~t之间所有的节点
+	{
+		if (s >= t){
+			return false;
+		}
+		node *p = head;
+		node *q = head->next;
+		while (q != NULL)
+		{
+			if (q->num > s&&q->num < t){
+				node *temp = q;
+				q = q->next;
+				p->next = q;
+				delete temp;
+			}
+			else{
+				p = q;
+				q = q->next;
+			}
+		}
+		return true;
+	}
+
+	void display()
+	{
+		node *temp = head->next;
+		while (temp->next != nullptr)
+		{
+			cout << temp->num << " ";
+			temp=temp->next;
+		}
+		cout << endl;
+	}
+
+
+
+
+	~seqlist()
+	{
+		node *cur = head;
+		while (cur!=NULL)
+		{
+			node *temp = cur;
+			cur = cur->next;
+			delete temp;
+		}
+	}
+	
+};
+
+
+
+int main()
+{
+	/*int arr[2] = { 1, 2 };
+	seqlist tst(arr,2);*/
+	int arr[5] = { 1, 2, 3, 4, 5 };
+	seqlist tst(arr, 5);
+	tst.deletenode(1, 5);
+	tst.display();
+	int a;
+	cin >> a;
+	return 0;
+}
