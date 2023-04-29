@@ -1,0 +1,19 @@
+void RemoveDuplicates()
+	{
+		node *cur = head;
+		node *pre = nullptr;
+		unordered_set<int> seen;
+		while (cur != nullptr)
+		{
+			if (seen.find(cur->num) != seen.end()){
+				pre->next = cur->next;
+				delete cur;
+				cur = pre->next;
+			}
+			else{
+				seen.insert(cur->num);
+				pre = cur;
+				cur = cur->next;
+			}
+		}
+	}
