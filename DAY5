@@ -19,7 +19,7 @@ public:
 	{
 		head=new node();
 		head->next = nullptr;
-		for (int i = n; i >= 0; i--)
+		for (int i = n-1; i >= 0; i--)
 		{
 			node *temp = new node(arr[i]);
 			temp->next = head->next;
@@ -53,7 +53,7 @@ public:
 	void display()
 	{
 		node *temp = head->next;
-		while (temp->next != nullptr)
+		while (temp != nullptr)
 		{
 			cout << temp->num << " ";
 			temp=temp->next;
