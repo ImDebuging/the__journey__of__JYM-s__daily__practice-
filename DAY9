@@ -1,0 +1,87 @@
+#include<iostream>
+using namespace std;
+
+struct node
+{
+	int num;
+	struct node *next;
+
+	node(){}
+	node(int a) :num(a){}
+};
+
+
+class seqlist{
+private:
+	node *head;
+public:
+	seqlist(int arr[], int n)
+	{
+		head = new node();
+		head->next = nullptr;
+		for (int i = n-1; i >= 0; i--)
+		{
+			node *temp = new node(arr[i]);
+			temp->next = head->next;
+			head->next = temp;
+		}
+	}
+
+	void deleteMinNode()
+	{
+		node *pre, *minpre;
+		pre = head;
+		minpre = pre->next;
+		while (pre->next!=NULL)       //找到数值最小的节点的前一个节点
+		{
+			if ((pre->next->num) < (minpre->next->num)){
+				minpre = pre;
+			}
+			pre = pre->next;
+		}
+		node *temp = minpre->next;
+		minpre->next = temp->next;
+		delete temp;
+	}
+
+	void display()
+	{
+		node *temp = head->next;
+		while (temp != nullptr)
+		{
+			cout << temp->num << " ";
+			temp = temp->next;
+		}
+		cout << endl;
+	}
+
+
+
+
+	~seqlist()
+	{
+		node *cur = head;
+		while (cur != NULL)
+		{
+			node *temp = cur;
+			cur = cur->next;
+			delete temp;
+		}
+	}
+
+};
+
+
+
+int main()
+{
+	/*int arr[2] = { 1, 2 };
+	seqlist tst(arr,2);*/
+	int arr[5] = { 1, 2, 3, 4, 5 };
+	seqlist tst(arr, 5);
+	tst.deleteMinNode();
+	tst.display();
+	int a;
+	cin >> a;
+	return 0;
+}
